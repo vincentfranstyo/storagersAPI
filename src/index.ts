@@ -6,6 +6,7 @@ import { userRouter } from "./Users/user.router";
 import { selfRouter } from "./Self/self.router";
 import { loginRouter } from "./Login/login.router";
 import { barangRouter } from "./Barang/barang.router";
+import { perusahaanRouter } from "./Perusahaan/perusahaan.router";
 
 dotenv.config();
 
@@ -22,7 +23,8 @@ app.use(express.json());
 app.use("/api/users", userRouter);
 app.use("/api/self", selfRouter);
 app.use("/api/login", loginRouter);
-app.use("/api/Barang", barangRouter);
+app.use("/api/barang", barangRouter);
+app.use("/api/perusahaan", perusahaanRouter);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
