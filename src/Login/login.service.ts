@@ -9,17 +9,17 @@ export type User = {
 export const getLogin = async (username: string, password: string): Promise<User | null> => {
     return db.user.findUnique({
         where: {
-            username,
-            password,
-        }
+            username: username,
+            password: password,
+        },
     });
 }
 
 export const createLogin = (username: string, password: string): Promise<User> => {
     return db.user.create({
         data: {
-            username,
-            password,
+            username: username,
+            password: password,
         }
     });
 }

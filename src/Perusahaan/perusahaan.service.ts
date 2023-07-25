@@ -14,9 +14,6 @@ export const getPerusahaan = async (q: string): Promise<Perusahaan[]> => {
             nama: {
                 contains: q,
             },
-            kode: {
-                contains: q,
-            },
         }
     });
 }

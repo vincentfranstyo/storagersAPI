@@ -74,7 +74,7 @@ perusahaanRouter.post('/', [body("nama").isString().notEmpty(), body("kode").isS
 });
 
 // PUT: Update existing perusahaan
-perusahaanRouter.put('/:id', [body("nama").isString().notEmpty(), body("kode").isString().notEmpty(), body("alamat").isString().notEmpty(), body("no_telp").isString().notEmpty(),], async (req: Request, res: Response) => {
+perusahaanRouter.put('/:id', [body("nama").isString().notEmpty(), body("kode").isString().notEmpty(), body("alamat").isString().notEmpty(), body("no_telp").isString().notEmpty(), body("perusahaan_id").isString().notEmpty()], async (req: Request, res: Response) => {
     let apiResp = {};
     try{
         const perusahaan = await PerusahaanService.updatePerusahaan(req.params.id, req.body as Perusahaan);

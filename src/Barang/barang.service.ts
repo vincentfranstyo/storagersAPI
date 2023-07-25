@@ -15,9 +15,6 @@ export const getBarang = async (q: string, idPerusahaan: string): Promise<Barang
             nama: {
                 contains: q,
             },
-            kode: {
-                contains: q,
-            },
             perusahaan_id: idPerusahaan,
         }
     });
@@ -40,9 +37,16 @@ export const createBarang = async (barang: Barang): Promise<Barang> => {
 export const updateBarang = async (id: string, barang: Barang): Promise<Barang | null> => {
     return db.barang.update({
         where: {
-            id,
+            id: id,
         },
-        data: barang,
+        data: {
+            id: barang.id,
+            nama: barang.nama,
+            kode: barang.kode,
+            harga: barang.harga,
+            stok: barang.stok,
+            perusahaan_id: barang.perusahaan_id,
+        }
     });
 }
 
