@@ -1,0 +1,19 @@
+version: '3.9'
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+  mysql:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password --lower_case_table_names=1
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=hstnnarj1
+      - MYSQL_DATABASE=storagersorm
+      - MYSQL_USER=root
+    ports:
+      - '3308:3306'
+
+volumes:
+  db-data:
