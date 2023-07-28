@@ -4,6 +4,8 @@ import {body} from 'express-validator';
 
 import * as PerusahaanService from './perusahaan.service';
 import {Perusahaan} from './perusahaan.service';
+import jwt from "jsonwebtoken";
+import {User} from "@prisma/client";
 
 export const perusahaanRouter = express.Router();
 
@@ -31,6 +33,7 @@ perusahaanRouter.get('/', async (req: Request, res: Response) => {
 // GET: Perusahaan by id
 perusahaanRouter.get('/:id', async (req: Request, res: Response) => {
     let apiResp = {};
+    // const header = req.headers.authorization as string;
     try{
         const perusahaan = await PerusahaanService.getPerusahaanById(req.params.id);
         if (!perusahaan) {
@@ -55,7 +58,12 @@ perusahaanRouter.get('/:id', async (req: Request, res: Response) => {
 // POST: Create new perusahaan
 perusahaanRouter.post('/', [body("nama").isString().notEmpty(), body("kode").isString().notEmpty(), body("alamat").isString().notEmpty(), body("no_telp").isString().notEmpty(),], async (req: Request, res: Response) => {
     let apiResp = {};
+    const header = req.headers.authorization as string;
     try{
+        const currentUser = jwt.verify(header, 'secret-Key') as User;
+        if (currentUser.username !== "admin") {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
         const perusahaan = await PerusahaanService.createPerusahaan(req.body as Perusahaan);
         apiResp = {
             status: "success",
@@ -76,7 +84,12 @@ perusahaanRouter.post('/', [body("nama").isString().notEmpty(), body("kode").isS
 // PUT: Update existing perusahaan
 perusahaanRouter.put('/:id', [body("nama").isString().notEmpty(), body("kode").isString().notEmpty(), body("alamat").isString().notEmpty(), body("no_telp").isString().notEmpty(), body("perusahaan_id").isString().notEmpty()], async (req: Request, res: Response) => {
     let apiResp = {};
+    const header = req.headers.authorization as string;
     try{
+        const currentUser = jwt.verify(header, 'secret-Key') as User;
+        if (currentUser.username !== "admin") {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
         const perusahaan = await PerusahaanService.updatePerusahaan(req.params.id, req.body as Perusahaan);
         if (!perusahaan) {
             return res.status(404).json({ message: 'Perusahaan not found' });
@@ -100,7 +113,12 @@ perusahaanRouter.put('/:id', [body("nama").isString().notEmpty(), body("kode").i
 // DELETE: Delete existing perusahaan
 perusahaanRouter.delete('/:id', async (req: Request, res: Response) => {
     let apiResp = {};
+    const header = req.headers.authorization as string;
     try{
+        const currentUser = await jwt.verify(header, 'secret-Key') as User;
+        if (currentUser.username !== "admin") {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
         const perusahaan = await PerusahaanService.deletePerusahaan(req.params.id);
         if (!perusahaan) {
             return res.status(404).json({ message: 'Perusahaan not found' });

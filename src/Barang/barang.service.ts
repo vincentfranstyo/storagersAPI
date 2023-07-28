@@ -9,8 +9,8 @@ export type Barang = {
     perusahaan_id: string
 }
 
-export const getBarang = async (q: string, idPerusahaan: string): Promise<Barang[]> => {
-    if (q !== undefined && idPerusahaan !== undefined) {
+export const getBarang = async (q: string, perusahaan: string): Promise<Barang[]> => {
+    if (q !== undefined) {
         return db.barang.findMany({
             where: {
                 OR: [
@@ -24,10 +24,41 @@ export const getBarang = async (q: string, idPerusahaan: string): Promise<Barang
                             contains: q
                         }
                     }
-                ],
+                ]
+            }
+        });
+    } else if (perusahaan !== undefined) {
+        return db.barang.findMany({
+            where: {
                 perusahaan_id: {
-                    contains: idPerusahaan
+                    contains: perusahaan
                 }
+            }
+        });
+    } else if (perusahaan !== undefined && q !== undefined) {
+        return db.barang.findMany({
+            where: {
+                AND: [
+                    {
+                        perusahaan_id: {
+                            contains: perusahaan
+                        }
+                    },
+                    {
+                        OR: [
+                            {
+                                nama: {
+                                    contains: q
+                                }
+                            },
+                            {
+                                kode: {
+                                    contains: q
+                                }
+                            }
+                        ]
+                    }
+                ]
             }
         });
     } else {
