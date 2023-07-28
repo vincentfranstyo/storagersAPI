@@ -18,6 +18,8 @@ barangRouter.get('/', async (req: Request, res: Response) => {
             data: barangs,
         };
     } catch (err: any) {
+        console.error(err)
+
         res.status(500).json({message: err.message});
         apiResp = {
             status: "error",
@@ -52,30 +54,6 @@ barangRouter.get('/:id', async (req: Request, res: Response) => {
     res.send(apiResp);
 });
 
-// POST: Create new Barang
-// request:
-// {
-//     nama: string
-//     harga: int
-//     stok: int
-//     perusahaan_id: string
-//     kode: string
-// }
-//
-// response:
-// {
-//     status: "success" | "error";
-//     message: string;
-//     data: {
-//         id: string;
-//         nama: string;
-//         harga: number;
-//         stok: number;
-//         kode: string;
-//         perusahaan_id: string;
-//     }
-// }
-
 barangRouter.post('/', [body("nama").isString().notEmpty(), body("kode").isString().notEmpty(), body("harga").isString().notEmpty(), body("stok").isString().notEmpty(), body("perusahaan_id").isString().notEmpty(),], async (req: Request, res: Response) => {
     let apiResp = {};
     try {
@@ -93,31 +71,8 @@ barangRouter.post('/', [body("nama").isString().notEmpty(), body("kode").isStrin
             data: null,
         }
     }
+    res.send(apiResp);
 });
-
-// PUT: Update Barang by id
-// request:
-// {
-//     nama: string
-//     harga: int
-//     stok: int
-//     perusahaan_id: string
-//     kode: string
-// }
-//
-// response:
-// {
-//     status: "success" | "error";
-//     message: string;
-//     data: {
-//         id: string;
-//         nama: string;
-//         harga: number;
-//         stok: number;
-//         kode: string;
-//         perusahaan_id: string;
-//     }
-// }
 
 barangRouter.put('/:id', [body("nama").isString().notEmpty(), body("kode").isString().notEmpty(), body("harga").isString().notEmpty(), body("stok").isString().notEmpty(), body("perusahaan_id").isString().notEmpty(),], async (req: Request, res: Response) => {
     let apiResp = {};
