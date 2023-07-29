@@ -33,7 +33,9 @@ A Single-service API made for mini e-commerce application, made with Prisma DB, 
 - Prisma DB
 - ExpressJS
 - Typescript
-- JWT
+- JWTAuth
+- MySQL
+- Docker
 
 ## Endpoints
 ### Barang
