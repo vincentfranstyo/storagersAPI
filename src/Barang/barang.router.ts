@@ -87,7 +87,11 @@ barangRouter.put('/:id', [body("nama").isString().notEmpty(), body("kode").isStr
         if (currentUser !== "admin"){
             return res.status(401).json({message: 'Unauthorized'});
         }
-        const barang = await BarangService.updateBarang(req.params.id, req.body as Barang);
+        const currentBarang = await BarangService.getBarangById(req.params.id);
+        if (!currentBarang) {
+            throw new Error(`Invalid Barang ID: ${req.params.id}`);
+        }
+        const barang = await BarangService.updateBarang(req.params.id, req.body as Barang, currentBarang.kode);
         if (!barang) {
             return res.status(404).json({message: 'Barang not found'});
         }
@@ -112,7 +116,11 @@ barangRouter.put('/:id', [body("nama").isString().notEmpty(), body("kode").isStr
 barangRouter.put('/:user/:id', [body("nama").isString().notEmpty(), body("kode").isString().notEmpty(), body("harga").isString().notEmpty(), body("stok").isString().notEmpty(), body("perusahaan_id").isString().notEmpty(),], async (req: Request, res: Response) => {
     let apiResp = {};
     try {
-        const barang = await BarangService.updateBarang(req.params.id, req.body as Barang);
+        const currentBarang = await BarangService.getBarangById(req.params.id);
+        if (!currentBarang) {
+            throw new Error(`Invalid Barang ID: ${req.params.id}`);
+        }
+        const barang = await BarangService.updateBarang(req.params.id, req.body as Barang, currentBarang.kode);
         if (!barang) {
             return res.status(404).json({message: 'Barang not found'});
         }
@@ -121,7 +129,6 @@ barangRouter.put('/:user/:id', [body("nama").isString().notEmpty(), body("kode")
             message: `${barang.nama} updated successfully`,
             data: barang,
         };
-
         res.send(apiResp);
     } catch (err: any) {
         apiResp = {

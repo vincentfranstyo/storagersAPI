@@ -21,12 +21,12 @@ RUN npm install prisma --save-dev
 
 COPY . .
 
-EXPOSE 3306
+EXPOSE 3310
+
+RUN ["chmod", "+x", "./wait-for-mysql.sh"]
 
 RUN npx prisma generate
 
-RUN npx prisma migrate
-
-RUN npx prisma db seed
+RUN /bin/bash -c "./wait-for-mysql.sh && npx prisma migrate && npx prisma db seed"
 
 CMD ["npm", "run", "dev"]

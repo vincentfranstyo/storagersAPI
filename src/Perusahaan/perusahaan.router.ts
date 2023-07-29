@@ -69,15 +69,11 @@ perusahaanRouter.post('/', [body("nama").isString().notEmpty(), body("kode").isS
             message: "perusahaan created successfully",
             data: perusahaan,
         };
+        res.send(apiResp);
     } catch (err: any) {
         res.status(500).json({ message: err.message });
-        apiResp = {
-            status: "error",
-            message: "failed to create perusahaan",
-            data: null,
-        }
+        console.log(err);
     }
-    res.send(apiResp);
 });
 
 // PUT: Update existing perusahaan
@@ -99,15 +95,12 @@ perusahaanRouter.put('/:id', [body("nama").isString().notEmpty(), body("kode").i
             message: `${perusahaan.nama} updated successfully`,
             data: perusahaan,
         };
+        res.send(apiResp);
     } catch (err: any) {
         res.status(500).json({ message: err.message });
-        apiResp = {
-            status: "error",
-            message: "failed to update perusahaan",
-            data: null,
-        }
+        console.error(err);
     }
-    res.send(apiResp);
+
 });
 
 // DELETE: Delete existing perusahaan

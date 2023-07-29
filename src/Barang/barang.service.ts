@@ -75,12 +75,53 @@ export const getBarangById = async (id: string): Promise<Barang | null> => {
 }
 
 export const createBarang = async (barang: Barang): Promise<Barang> => {
+    // validate kode barang to be unique
+    const barangWithSameCode = await db.barang.findFirst({
+        where: {
+            kode: barang.kode.toUpperCase(),
+        }
+    });
+    try{
+        if(barangWithSameCode !== null){
+            throw new Error("Kode barang sudah digunakan");
+        }
+        if (barang.harga === 0){
+            throw new Error("Harga barang tidak boleh 0");
+        }
+    } catch (e) {
+        console.error(e);
+    }
+
     return db.barang.create({
-        data: barang,
+        data: {
+            id: barang.id,
+            nama: barang.nama,
+            kode: barang.kode.toUpperCase(),
+            harga: barang.harga,
+            stok: barang.stok,
+            perusahaan_id: barang.perusahaan_id,
+        }
     });
 }
 
-export const updateBarang = async (id: string, barang: Barang): Promise<Barang | null> => {
+export const updateBarang = async (id: string, barang: Barang, kodeCurrentBarang: string): Promise<Barang | null> => {
+    const barangWithSameCode = await db.barang.findFirst({
+        where: {
+            kode: barang.kode.toUpperCase(),
+        }
+    });
+    try{
+        if(barangWithSameCode !== null && barangWithSameCode.kode !== kodeCurrentBarang){
+            throw new Error("Kode barang sudah digunakan");
+        }
+        if (barang.harga === 0){
+            throw new Error("Harga barang tidak boleh 0");
+        }
+    } catch (e) {
+        console.error(e);
+        throw e;
+    }
+
     return db.barang.update({
         where: {
             id: id,
@@ -88,7 +129,7 @@ export const updateBarang = async (id: string, barang: Barang): Promise<Barang |
         data: {
             id: barang.id,
             nama: barang.nama,
-            kode: barang.kode,
+            kode: barang.kode.toUpperCase(),
             harga: barang.harga,
             stok: barang.stok,
             perusahaan_id: barang.perusahaan_id,

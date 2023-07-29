@@ -4,21 +4,21 @@ A Single-service API made for mini e-commerce application, made with Prisma DB, 
 ## Creator
 - Vincent Franstyo (18221100)
 
-## How to run on docker
-1. Clone this repository
-2. Get Docker Desktop
-3. Ensure that docker desktop is running
-4. Run `docker-compose up -d`
-5. Open `localhost:4000` or through docker desktop
-6. Open `ohl-fe.vercel.app`
-7. Log in as admin (username: `admin`, password: `admin`)
-8. Enjoy!
+## How to run
 
+### Requirements
+- [NodeJS](https://nodejs.org/en/download/)
+- [Prisma](https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch-sql-typescript-postgres)
+- [Docker](https://docs.docker.com/get-docker/)
+- Typescript (`npm install -g typescript`)
+- Nodemon (`npm install -g nodemon`)
+- [MySQL](https://dev.mysql.com/downloads/installer/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-## How to run locally
+### Locally
 1. Clone this repository
-2. Run `npm install` or `yarn install`
-3. Run `npm run dev` or `yarn dev`
+2. Run `npm install`
+3. Run `npm run dev`
 4. Open `ohl-fe.vercel.app`
 5. Log in as admin (username: `admin`, password: `admin`)
 6. Enjoy!
@@ -36,6 +36,7 @@ A Single-service API made for mini e-commerce application, made with Prisma DB, 
 - Typescript
 - JWTAuth
 - MySQL
+- JavaScript
 - Docker
 
 ## Endpoints
@@ -61,8 +62,12 @@ A Single-service API made for mini e-commerce application, made with Prisma DB, 
 - `GET /api/self`: get self data and verify through JWT
 
 ## Bonus
-- SOLID (SRP): saya sebisa mungkin mengimplementasikan SRP pada project ini, seperti pada `src/barang` dan `src/perusahaan` dimana saya memisahkan fungsi-fungsi yang berbeda menjadi fungsi yang berbeda-beda sehingga dapat mempermudah untuk mengubah fungsi-fungsi tersebut tanpa mengubah fungsi lainnya
-- SOLID (OCP): OCP pada project ini diimplementasikan seperti pada `src/barang` dan `src/perusahaan` dimana setiap fungsi pada barang.service.ts dan perusahaan.service.ts open for extension dan close for modification
+- **SOLID (SRP)**: saya sebisa mungkin mengimplementasikan SRP pada project ini, seperti pada `src/barang` dan `src/perusahaan` dimana saya memisahkan fungsi-fungsi yang berbeda menjadi fungsi yang berbeda-beda sehingga dapat mempermudah untuk mengubah fungsi-fungsi tersebut tanpa mengubah fungsi lainnya
+- **SOLID (OCP)**: OCP pada project ini diimplementasikan seperti pada `src/barang` dan `src/perusahaan` dimana setiap fungsi pada barang.service.ts dan perusahaan.service.ts open for extension dan close for modification
 
+- **Single Service Implementation**: Menggunakan typescript dan expressjs untuk membuat sebuah API yang dapat di-_consume_ oleh frontend dan Backend. Config TS: "Strict": "true", tetapi menggunakan any hanya untuk error type.
 
+## WARNING
+![img.png](img.png)
+Maaf Kak, sudah dicoba untuk di-dockerize. Tetapi setelah coba di-debug masalahnya, solusinya masih belum ditemukan.
 
