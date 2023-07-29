@@ -108,7 +108,7 @@ barangRouter.put('/:id', [body("nama").isString().notEmpty(), body("kode").isStr
     }
 });
 
-// UPDATE : Update Barang by id and userid
+// UPDATE : Update Barang by id and user
 barangRouter.put('/:user/:id', [body("nama").isString().notEmpty(), body("kode").isString().notEmpty(), body("harga").isString().notEmpty(), body("stok").isString().notEmpty(), body("perusahaan_id").isString().notEmpty(),], async (req: Request, res: Response) => {
     let apiResp = {};
     try {
