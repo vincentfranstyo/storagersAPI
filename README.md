@@ -25,9 +25,10 @@ A Single-service API made for mini e-commerce application, made with Prisma DB, 
 
 ## Design Patterns
 - Singleton: digunakan agar tidak adanya multiple instance dari Prisma DB
-- Composite: digunakan untuk mempermudah implementasi router
+- Facade: digunakan untuk memepermudah implementasi sistem kompleks menjadi subsistem
 - Chain of Responsibility: digunakan untuk mempermudah implementasi router dan seeding
 - Proxy: digunakan untuk memudahkan pemanggilan router
+- Factory Method: digunakan karena dapat mengenkapsulasi pembuatan objek agar data tetap konsisten
 
 ## Tech Stack
 - Prisma DB
@@ -58,6 +59,10 @@ A Single-service API made for mini e-commerce application, made with Prisma DB, 
 
 ### Self
 - `GET /api/self`: get self data and verify through JWT
+
+## Bonus
+- SOLID (SRP): saya sebisa mungkin mengimplementasikan SRP pada project ini, seperti pada `src/barang` dan `src/perusahaan` dimana saya memisahkan fungsi-fungsi yang berbeda menjadi fungsi yang berbeda-beda sehingga dapat mempermudah untuk mengubah fungsi-fungsi tersebut tanpa mengubah fungsi lainnya
+- SOLID (OCP): OCP pada project ini diimplementasikan seperti pada `src/barang` dan `src/perusahaan` dimana setiap fungsi pada barang.service.ts dan perusahaan.service.ts open for extension dan close for modification
 
 
 

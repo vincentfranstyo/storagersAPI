@@ -5,11 +5,3 @@ export type User = {
     username: string
     password: string
 }
-
-export const getSelf = async (): Promise<User | null> => {
-    return db.user.findUnique({
-        where: {
-            username: "admin",
-        }
-    });
-}
