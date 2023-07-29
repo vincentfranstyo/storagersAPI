@@ -14,17 +14,19 @@ A Single-service API made for mini e-commerce application, made with Prisma DB, 
 - Nodemon (`npm install -g nodemon`)
 - [MySQL](https://dev.mysql.com/downloads/installer/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
+- [JWTAuth](https://jwt.io/)
 
 ### Locally
 1. Clone this repository
 2. Run `npm install`
-3. Run `npx prisma generate`
-4. Run `npx migrate dev`
-5. Run `npx prisma db seed`
-6. Run `npm run dev`
-7. Open `ohl-fe.vercel.app`
-8. Log in as admin (username: `admin`, password: `admin`)
-9. Enjoy!
+3. Set up the environment at .env file (e.g. mysql://root:[DB_PASSWORD]@localhost:3306/storagersorm)
+4. Run `npx prisma generate`
+5. Run `npx migrate dev --name init`
+6. Run `npx prisma db seed`
+7. Run `npm run dev`
+8. Open `ohl-fe.vercel.app`
+9. Log in as admin (username: `admin`, password: `admin`)
+10. Enjoy!
 
 ## Design Patterns
 - Singleton: digunakan agar tidak adanya multiple instance dari Prisma DB
