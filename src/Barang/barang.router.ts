@@ -4,12 +4,14 @@ import {body} from 'express-validator';
 
 import * as BarangService from './barang.service';
 import {Barang} from './barang.service';
+import jwt from "jsonwebtoken";
 
 export const barangRouter = express.Router();
 
 // GET: List of Barang
 barangRouter.get('/', async (req: Request, res: Response) => {
     let apiResp = {};
+    // console.log("header get", req.headers.authorization);
     try {
         const barangs = await BarangService.getBarang(req.query.q as string, req.query.idPerusahaan as string);
         apiResp = {
@@ -56,27 +58,35 @@ barangRouter.get('/:id', async (req: Request, res: Response) => {
 
 barangRouter.post('/', [body("nama").isString().notEmpty(), body("kode").isString().notEmpty(), body("harga").isString().notEmpty(), body("stok").isString().notEmpty(), body("perusahaan_id").isString().notEmpty(),], async (req: Request, res: Response) => {
     let apiResp = {};
+    const header = req.headers.authorization as string;
     try {
+        console.log("header", header);
+        const currentUser = jwt.verify(header, 'secret-Key') as string;
+        console.log("currentUser", currentUser);
+        if (currentUser !== "admin"){
+            return res.status(401).json({message: 'Unauthorized'});
+        }
         const barang = await BarangService.createBarang(req.body as Barang);
         apiResp = {
             status: "success",
             message: `${barang.nama} created successfully`,
             data: barang,
         };
+        res.send(apiResp);
     } catch (err: any) {
         res.status(500).json({message: err.message});
-        apiResp = {
-            status: "error",
-            message: "failed to create Barang",
-            data: null,
-        }
+        console.log(err);
     }
-    res.send(apiResp);
 });
 
 barangRouter.put('/:id', [body("nama").isString().notEmpty(), body("kode").isString().notEmpty(), body("harga").isString().notEmpty(), body("stok").isString().notEmpty(), body("perusahaan_id").isString().notEmpty(),], async (req: Request, res: Response) => {
     let apiResp = {};
+    const header = req.headers.authorization as string;
     try {
+        const currentUser = jwt.verify(header, 'secret-Key') as string;
+        if (currentUser !== "admin"){
+            return res.status(401).json({message: 'Unauthorized'});
+        }
         const barang = await BarangService.updateBarang(req.params.id, req.body as Barang);
         if (!barang) {
             return res.status(404).json({message: 'Barang not found'});
@@ -102,7 +112,12 @@ barangRouter.put('/:id', [body("nama").isString().notEmpty(), body("kode").isStr
 // DELETE: Delete Barang by id
 barangRouter.delete('/:id', async (req: Request, res: Response) => {
     let apiResp = {};
+    const header = req.headers.authorization as string;
     try {
+        const currentUser = jwt.verify(header, 'secret-Key') as string;
+        if (currentUser !== "admin"){
+            return res.status(401).json({message: 'Unauthorized'});
+        }
         const barang = await BarangService.deleteBarang(req.params.id);
         if (!barang) {
             return res.status(404).json({message: 'Barang not found'});

@@ -5,7 +5,6 @@ import {body} from 'express-validator';
 import * as PerusahaanService from './perusahaan.service';
 import {Perusahaan} from './perusahaan.service';
 import jwt from "jsonwebtoken";
-import {User} from "@prisma/client";
 
 export const perusahaanRouter = express.Router();
 
@@ -60,9 +59,9 @@ perusahaanRouter.post('/', [body("nama").isString().notEmpty(), body("kode").isS
     let apiResp = {};
     const header = req.headers.authorization as string;
     try{
-        const currentUser = jwt.verify(header, 'secret-Key') as User;
-        if (currentUser.username !== "admin") {
-            return res.status(401).json({ message: 'Unauthorized' });
+        const currentUser = jwt.verify(header, 'secret-Key') as string;
+        if (currentUser !== "admin") {
+            return res.status(401). json({ message: 'Unauthorized' });
         }
         const perusahaan = await PerusahaanService.createPerusahaan(req.body as Perusahaan);
         apiResp = {
@@ -86,8 +85,9 @@ perusahaanRouter.put('/:id', [body("nama").isString().notEmpty(), body("kode").i
     let apiResp = {};
     const header = req.headers.authorization as string;
     try{
-        const currentUser = jwt.verify(header, 'secret-Key') as User;
-        if (currentUser.username !== "admin") {
+        // console.log("header", header)
+        const currentUser = jwt.verify(header, 'secret-Key') as string;
+        if (currentUser !== "admin") {
             return res.status(401).json({ message: 'Unauthorized' });
         }
         const perusahaan = await PerusahaanService.updatePerusahaan(req.params.id, req.body as Perusahaan);
@@ -115,8 +115,8 @@ perusahaanRouter.delete('/:id', async (req: Request, res: Response) => {
     let apiResp = {};
     const header = req.headers.authorization as string;
     try{
-        const currentUser = await jwt.verify(header, 'secret-Key') as User;
-        if (currentUser.username !== "admin") {
+        const currentUser = await jwt.verify(header, 'secret-Key') as string;
+        if (currentUser !== "admin") {
             return res.status(401).json({ message: 'Unauthorized' });
         }
         const perusahaan = await PerusahaanService.deletePerusahaan(req.params.id);
