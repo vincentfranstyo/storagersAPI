@@ -108,6 +108,31 @@ barangRouter.put('/:id', [body("nama").isString().notEmpty(), body("kode").isStr
     }
 });
 
+// UPDATE : Update Barang by id and userid
+barangRouter.put('/:user/:id', [body("nama").isString().notEmpty(), body("kode").isString().notEmpty(), body("harga").isString().notEmpty(), body("stok").isString().notEmpty(), body("perusahaan_id").isString().notEmpty(),], async (req: Request, res: Response) => {
+    let apiResp = {};
+    try {
+        const barang = await BarangService.updateBarang(req.params.id, req.body as Barang);
+        if (!barang) {
+            return res.status(404).json({message: 'Barang not found'});
+        }
+        apiResp = {
+            status: "success",
+            message: `${barang.nama} updated successfully`,
+            data: barang,
+        };
+
+        res.send(apiResp);
+    } catch (err: any) {
+        apiResp = {
+            status: "error",
+            message: "failed to update Barang",
+            data: null,
+        }
+        res.status(500).json({message: apiResp});
+    }
+});
+
 
 // DELETE: Delete Barang by id
 barangRouter.delete('/:id', async (req: Request, res: Response) => {
