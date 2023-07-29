@@ -1,5 +1,5 @@
 # StoragersAPI
-An API made for mini e-commerce application, made with Prisma DB, ExpressJS and Typescript
+A Single-service API made for mini e-commerce application, made with Prisma DB, ExpressJS and Typescript
 
 ## Creator
 - Vincent Franstyo (18221100)
