@@ -14,12 +14,3 @@ export const getLogin = async (username: string, password: string): Promise<User
         },
     });
 }
-
-export const createLogin = (username: string, password: string): Promise<User> => {
-    return db.user.create({
-        data: {
-            username: username,
-            password: password,
-        }
-    });
-}

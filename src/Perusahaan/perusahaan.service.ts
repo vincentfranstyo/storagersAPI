@@ -61,12 +61,7 @@ export const updatePerusahaan = async (id: string, perusahaan: Perusahaan): Prom
     const validKode = () => {
         const kode = perusahaan.kode;
         if (kode.length === 3) {
-            for (let i = kode.length; i < 3; i++) {
-                if (kode[i] !== kode.toUpperCase()) {
-                    return false;
-                }
-            }
-            return true;
+            return kode === kode.toUpperCase();
         } else {
             return false;
         }

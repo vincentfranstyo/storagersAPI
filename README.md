@@ -18,10 +18,13 @@ A Single-service API made for mini e-commerce application, made with Prisma DB, 
 ### Locally
 1. Clone this repository
 2. Run `npm install`
-3. Run `npm run dev`
-4. Open `ohl-fe.vercel.app`
-5. Log in as admin (username: `admin`, password: `admin`)
-6. Enjoy!
+3. Run `npx prisma generate`
+4. Run `npx migrate dev`
+5. Run `npx prisma db seed`
+6. Run `npm run dev`
+7. Open `ohl-fe.vercel.app`
+8. Log in as admin (username: `admin`, password: `admin`)
+9. Enjoy!
 
 ## Design Patterns
 - Singleton: digunakan agar tidak adanya multiple instance dari Prisma DB
@@ -64,6 +67,9 @@ A Single-service API made for mini e-commerce application, made with Prisma DB, 
 ## Bonus
 - **SOLID (SRP)**: saya sebisa mungkin mengimplementasikan SRP pada project ini, seperti pada `src/barang` dan `src/perusahaan` dimana saya memisahkan fungsi-fungsi yang berbeda menjadi fungsi yang berbeda-beda sehingga dapat mempermudah untuk mengubah fungsi-fungsi tersebut tanpa mengubah fungsi lainnya
 - **SOLID (OCP)**: OCP pada project ini diimplementasikan seperti pada `src/barang` dan `src/perusahaan` dimana setiap fungsi pada barang.service.ts dan perusahaan.service.ts open for extension dan close for modification
+- **SOLID (LSP)**: LSP adalah saat dimana superclass dapat digantikan oleh subclass tanpa mengubah fungsionalitas dari superclass tersebut.
+- **SOLID (ISP)**: ISP adalah saat dimana sebuah interface tidak memiliki fungsi yang tidak digunakan oleh implementasi dari interface tersebut. Pada project ini, tidak ada interface yang tidak memiliki fungsi yang tidak digunakan.
+- **SOLID (DIP)**: DIP adalah saat dimana sebuah fungsi tidak bergantung pada implementasi dari fungsi tersebut, tetapi bergantung pada interface dari fungsi tersebut.
 
 - **Single Service Implementation**: Menggunakan typescript dan expressjs untuk membuat sebuah API yang dapat di-_consume_ oleh frontend dan Backend. Config TS: "Strict": "true", tetapi menggunakan any hanya untuk error type.
 
