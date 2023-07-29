@@ -8,25 +8,6 @@ export const selfRouter = express.Router();
 
 // GET: Self
 selfRouter.get('/', async (req: Request, res: Response) => {
-    // let apiResp = {};
-    // try{
-    //     const self = await SelfService.getSelf()
-    //     apiResp = {
-    //         status: "success",
-    //         message: "Self retrieved successfully",
-    //         data: self,
-    //     };
-    //     console.log(apiResp);
-    // } catch (err: any) {
-    //     res.status(500).json({message: err.message});
-    //     apiResp = {
-    //         status: "error",
-    //         message: "failed to retrieve self",
-    //         data: null,
-    //     };
-    // }
-    // res.send(apiResp);
-
     let header = req.headers.authorization as string;
 
     try {
