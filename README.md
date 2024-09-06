@@ -75,7 +75,3 @@ A Single-service API made for mini e-commerce application, made with Prisma DB, 
 
 - **Single Service Implementation**: Menggunakan typescript dan expressjs untuk membuat sebuah API yang dapat di-_consume_ oleh frontend dan Backend. Config TS: "Strict": "true", tetapi menggunakan any hanya untuk error type.
 
-## WARNING
-![img.png](img.png)
-Maaf Kak, sudah dicoba untuk di-dockerize. Tetapi setelah coba di-debug masalahnya, solusinya masih belum ditemukan.
-
